@@ -357,4 +357,4 @@ def init_log_checkpoint_path(args):
 
 
 if __name__ == '__main__':
-    sql_data, table_data, val_sql_data, val_table_data = load_dataset("../dataset/mysemQL", use_small=True)
+    sql_data, table_data, val_sql_data, val_table_data = load_dataset("../data/mysemQL", use_small=True)

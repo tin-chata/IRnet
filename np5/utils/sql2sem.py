@@ -358,9 +358,9 @@ class Parser:
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('--data_path', type=str, help='dataset', default="../../dataset/processed/train.json")
-    arg_parser.add_argument('--table_path', type=str, help='table dataset', default="../../dataset/nl2sql/tables.json")
-    arg_parser.add_argument('--output', type=str, help='output data', default="../../dataset/mysemQL/train.json")
+    arg_parser.add_argument('--data_path', type=str, help='data', default="../../data/processed/train.json")
+    arg_parser.add_argument('--table_path', type=str, help='table data', default="../../data/nl2sql/tables.json")
+    arg_parser.add_argument('--output', type=str, help='output data', default="../../data/mysemQL/train.json")
     args = arg_parser.parse_args()
 
     parser = Parser()

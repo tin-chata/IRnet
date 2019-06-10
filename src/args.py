@@ -51,7 +51,7 @@ def init_arg_parser():
     arg_parser.add_argument('--max_epoch', default=-1, type=int, help='maximum number of training epoches')
     arg_parser.add_argument('--optimizer', default='Adam', type=str, help='optimizer')
     arg_parser.add_argument('--lr', default=0.001, type=float, help='learning rate')
-    arg_parser.add_argument('--dataset', default="./data", type=str)
+    arg_parser.add_argument('--data', default="./data", type=str)
     arg_parser.add_argument('--epoch', default=50, type=int, help='Maximum Epoch')
     arg_parser.add_argument('--save', default='./', type=str,help="Path to save the checkpoint and logs of epoch")
     return arg_parser

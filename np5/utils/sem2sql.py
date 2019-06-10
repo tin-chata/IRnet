@@ -657,8 +657,8 @@ def to_str(sql_json, N_T, schema, pre_table_names=None):
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('--data_path', type=str, help='dataset path', default="../../dataset/mysemQL/")
-    arg_parser.add_argument('--input_path', type=str, help='predicted logical form', default='../../dataset/mysemQL/dev.json')
+    arg_parser.add_argument('--data_path', type=str, help='data path', default="../../data/mysemQL/")
+    arg_parser.add_argument('--input_path', type=str, help='predicted logical form', default='../../data/mysemQL/dev.json')
     arg_parser.add_argument('--output_path', type=str, help='output data')
     args = arg_parser.parse_args()
 
