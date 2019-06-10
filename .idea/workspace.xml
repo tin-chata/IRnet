@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7451310-6f1a-441b-a7ae-aed586f532d5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocess/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocess/sql2SemQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/sql2SemQL.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocess/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sem2SQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/sem2SQL.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/args.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/args.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rule/graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/rule/graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/rule/semQL.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/rule/semQL.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
-    </list>
+    <list default="true" id="e7451310-6f1a-441b-a7ae-aed586f532d5" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
