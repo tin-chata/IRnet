@@ -175,6 +175,7 @@ class N(Action):
     def __repr__(self):
         return 'N(' + str(self.id_c) + ')'
 
+
 class C(Action):
     """
     Column
@@ -276,6 +277,7 @@ class Sel(Action):
 
     def __repr__(self):
         return 'Sel(' + str(self.id_c) + ')'
+
 
 class Filter(Action):
     """

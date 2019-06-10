@@ -48,6 +48,7 @@ def evaluate(args):
     with open('./predict_lf.json', 'w') as f:
         json.dump(json_datas, f)
 
+
 if __name__ == '__main__':
     arg_parser = arg.init_arg_parser()
     args = arg.init_config(arg_parser)

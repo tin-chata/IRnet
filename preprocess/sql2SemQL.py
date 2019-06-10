@@ -2,19 +2,19 @@
 """
 # @Time    : 2019/5/24
 # @Author  : Jiaqi&Zecheng
-# @File    : sql2SemQL.py
+# @File    : sql2sem.py
 # @Software: PyCharm
 """
 
 import argparse
 import json
 import sys
-
 import copy
 from utils import load_dataSets
 
 sys.path.append("..")
 from src.rule.semQL import Root1, Root, N, A, C, T, Sel, Sup, Filter, Order
+
 
 class Parser:
     def __init__(self):
@@ -34,17 +34,16 @@ class Parser:
         """
         use_sup, use_ord, use_fil = True, True, False
 
-        if sql['sql']['limit'] == None:
+        if sql['sql']['limit'] is None:
             use_sup = False
 
         if sql['sql']['orderBy'] == []:
             use_ord = False
-        elif sql['sql']['limit'] != None:
+        elif sql['sql']['limit'] is not None:
             use_ord = False
 
         # check the where and having
-        if sql['sql']['where'] != [] or \
-                        sql['sql']['having'] != []:
+        if sql['sql']['where'] != [] or sql['sql']['having'] != []:
             use_fil = True
 
         if use_fil and use_sup:
@@ -233,7 +232,6 @@ class Parser:
                     result.append(T(sql['col_table'][sql['sql']['orderBy'][1][0][1][1]]))
         return result, None
 
-
     def parse_one_condition(self, sql_condit, names, sql):
         result = []
         # check if V(root)
@@ -362,11 +360,12 @@ class Parser:
                 stack.extend(step_state)
         return result
 
+
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('--data_path', type=str, help='dataset', required=True)
-    arg_parser.add_argument('--table_path', type=str, help='table dataset', required=True)
-    arg_parser.add_argument('--output', type=str, help='output data', required=True)
+    arg_parser.add_argument('--data_path', type=str, help='dataset', default="../dataset/processed_data.json")
+    arg_parser.add_argument('--table_path', type=str, help='table dataset', default="../dataset/nl2sql/tables.json")
+    arg_parser.add_argument('--output', type=str, help='output data', default="../dataset/semQL/train_sem.json")
     args = arg_parser.parse_args()
 
     parser = Parser()
@@ -384,5 +383,5 @@ if __name__ == '__main__':
 
     print('Finished %s datas and failed %s datas' % (len(processed_data), len(datas) - len(processed_data)))
     with open(args.output, 'w', encoding='utf8') as f:
-        f.write(json.dumps(processed_data))
+        f.write(json.dumps(processed_data, indent=2))
 

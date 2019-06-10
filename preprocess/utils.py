@@ -15,6 +15,7 @@ AGG = ['average', 'sum', 'max', 'min', 'minimum', 'maximum', 'between']
 
 wordnet_lemmatizer = WordNetLemmatizer()
 
+
 def load_dataSets(args):
     with open(args.table_path, 'r', encoding='utf8') as f:
         table_datas = json.load(f)
@@ -55,6 +56,7 @@ def load_dataSets(args):
         d['keys'] = keys
     return datas, tables
 
+
 def group_header(toks, idx, num_toks, header_toks):
     for endIdx in reversed(range(idx + 1, num_toks+1)):
         sub_toks = toks[idx: endIdx]
@@ -62,6 +64,7 @@ def group_header(toks, idx, num_toks, header_toks):
         if sub_toks in header_toks:
             return endIdx, sub_toks
     return idx, None
+
 
 def fully_part_header(toks, idx, num_toks, header_toks):
     for endIdx in reversed(range(idx + 1, num_toks+1)):
@@ -71,6 +74,7 @@ def fully_part_header(toks, idx, num_toks, header_toks):
             if sub_toks in header_toks:
                 return endIdx, sub_toks
     return idx, None
+
 
 def partial_header(toks, idx, header_toks):
     def check_in(list_one, list_two):
@@ -89,6 +93,7 @@ def partial_header(toks, idx, header_toks):
                 return endIdx, tmp_heads
     return idx, None
 
+
 def symbol_filter(questions):
     question_tmp_q = []
     for q_id, q_val in enumerate(questions):
@@ -96,7 +101,7 @@ def symbol_filter(questions):
             question_tmp_q.append("'")
             question_tmp_q += ["".join(q_val[1:-1])]
             question_tmp_q.append("'")
-        elif len(q_val) > 2 and q_val[0] in ["'", '"', '`', '鈥�'] :
+        elif len(q_val) > 2 and q_val[0] in ["'", '"', '`', '鈥�']:
             question_tmp_q.append("'")
             question_tmp_q += ["".join(q_val[1:])]
         elif len(q_val) > 2 and q_val[-1] in ["'", '"', '`', '鈥�']:
@@ -136,6 +141,7 @@ def group_digital(toks, idx):
     else:
         return False
 
+
 def group_symbol(toks, idx, num_toks):
     if toks[idx-1] == "'":
         for i in range(0, min(3, num_toks-idx)):
@@ -145,9 +151,10 @@ def group_symbol(toks, idx, num_toks):
 
 
 def num2year(tok):
-    if len(str(tok)) == 4 and str(tok).isdigit() and int(str(tok)[:2]) < 22 and int(str(tok)[:2]) > 15:
+    if len(str(tok)) == 4 and str(tok).isdigit() and 15 < int(str(tok)[:2]) < 22:
         return True
     return False
+
 
 def set_header(toks, header_toks, tok_concol, idx, num_toks):
     def check_in(list_one, list_two):
@@ -162,9 +169,23 @@ def set_header(toks, header_toks, tok_concol, idx, num_toks):
                 return heads
     return None
 
+
 def re_lemma(string):
     lema = lemma(string.lower())
     if len(lema) > 0:
         return lema
     else:
         return string.lower()
+
+
+if __name__ == '__main__':
+    import argparse
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument('--data_path', type=str, help='dataset', default="../dataset/nl2sql/train.json")
+    arg_parser.add_argument('--table_path', type=str, help='table dataset', default="../dataset/nl2sql/tables.json")
+    arg_parser.add_argument('--output', type=str, help='output data', default="../dataset/processed_data.json")
+    arg_parser.add_argument('--conceptNet', type=str, help='conceptNet data', default="../dataset/conceptNet")
+    args = arg_parser.parse_args()
+
+    # loading dataSets
+    datas, table = load_dataSets(args)

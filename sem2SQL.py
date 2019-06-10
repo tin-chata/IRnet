@@ -2,7 +2,7 @@
 """
 # @Time    : 2019/5/27
 # @Author  : Jiaqi&Zecheng
-# @File    : sem2SQL.py
+# @File    : sem2sql.py
 # @Software: PyCharm
 """
 
@@ -230,6 +230,7 @@ def transform(query, schema, origin=None):
 
     parse_result = parse_result.replace('\t', '')
     return [parse_result]
+
 
 def col_to_str(agg, col, tab, table_names, N=1):
     _col = col.replace(' ', '_')
@@ -655,10 +656,7 @@ def to_str(sql_json, N_T, schema, pre_table_names=None):
     return sql
 
 
-
-
 if __name__ == '__main__':
-
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument('--data_path', type=str, help='dataset path', required=True)
     arg_parser.add_argument('--input_path', type=str, help='predicted logical form', required=True)
@@ -671,7 +669,6 @@ if __name__ == '__main__':
     alter_inter(datas)
     alter_column0(datas)
 
-
     index = range(len(datas))
     count = 0
     exception_count = 0
@@ -682,7 +679,8 @@ if __name__ == '__main__':
                 d.write(result[0] + '\n')
                 count += 1
             except Exception as e:
-                result = transform(datas[i], schemas[datas[i]['db_id']], origin='Root1(3) Root(5) Sel(0) N(0) A(3) C(0) T(0)')
+                result = transform(datas[i], schemas[datas[i]['db_id']],
+                                   origin='Root1(3) Root(5) Sel(0) N(0) A(3) C(0) T(0)')
                 exception_count += 1
                 d.write(result[0] + '\n')
                 count += 1

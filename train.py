@@ -5,16 +5,13 @@
 # @File    : train.py
 # @Software: PyCharm
 """
-
 import time
-import traceback
-
 import os
 import torch
-import torch.optim as optim
 import tqdm
 import copy
-
+import traceback
+import torch.optim as optim
 from src import args as arg
 from src import utils
 from src.models.model import IRNet
@@ -28,11 +25,9 @@ def train(args):
     """
 
     grammar = semQL.Grammar()
-    sql_data, table_data, val_sql_data,\
-    val_table_data= utils.load_dataset(args.dataset, use_small=args.toy)
+    sql_data, table_data, val_sql_data, val_table_data = utils.load_dataset(args.dataset, use_small=args.toy)
 
     model = IRNet(args, grammar)
-
 
     if args.cuda: model.cuda()
 
@@ -50,8 +45,7 @@ def train(args):
 
     if args.load_model:
         print('load pretrained model from %s'% (args.load_model))
-        pretrained_model = torch.load(args.load_model,
-                                         map_location=lambda storage, loc: storage)
+        pretrained_model = torch.load(args.load_model,map_location=lambda storage, loc: storage)
         pretrained_modeled = copy.deepcopy(pretrained_model)
         for k in pretrained_model.keys():
             if k not in model.state_dict().keys():
@@ -73,8 +67,8 @@ def train(args):
                     scheduler.step()
                 epoch_begin = time.time()
                 loss = utils.epoch_train(model, optimizer, args.batch_size, sql_data, table_data, args,
-                                   loss_epoch_threshold=args.loss_epoch_threshold,
-                                   sketch_loss_coefficient=args.sketch_loss_coefficient)
+                                         loss_epoch_threshold=args.loss_epoch_threshold,
+                                         sketch_loss_coefficient=args.sketch_loss_coefficient)
                 epoch_end = time.time()
                 json_datas = utils.epoch_acc(model, args.batch_size, val_sql_data, val_table_data,
                                              beam_size=args.beam_size)
