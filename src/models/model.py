@@ -124,8 +124,7 @@ class IRNet(BasicModel):
 
         for t in range(batch.max_sketch_num):
             if t == 0:
-                x = Variable(self.new_tensor(len(batch), self.sketch_decoder_lstm.input_size).zero_(),
-                             requires_grad=False)
+                x = Variable(self.new_tensor(len(batch), self.sketch_decoder_lstm.input_size).zero_(), requires_grad=False)
             else:
                 a_tm1_embeds = []
                 pre_types = []
@@ -206,7 +205,6 @@ class IRNet(BasicModel):
 
         tab_ctx = (src_encodings.unsqueeze(1) * embedding_differ.unsqueeze(3)).sum(2)
         schema_ctx = (src_encodings.unsqueeze(1) * schema_differ.unsqueeze(3)).sum(2)
-
 
         table_embedding = table_embedding + tab_ctx
 

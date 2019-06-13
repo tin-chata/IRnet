@@ -289,7 +289,7 @@ def epoch_acc(model, batch_size, sql_data, table_data, beam_size=3):
 
             simple_json = example.sql_json['pre_sql']
 
-            simple_json['sketch_result'] =  " ".join(str(x) for x in results_all[1])
+            simple_json['sketch_result'] = " ".join(str(x) for x in results_all[1])
             simple_json['model_result'] = pred
 
             json_datas.append(simple_json)

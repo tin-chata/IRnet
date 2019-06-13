@@ -365,7 +365,7 @@ if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument('--data_path', type=str, help='data', default="../data/processed_data.json")
     arg_parser.add_argument('--table_path', type=str, help='table data', default="../data/nl2sql/tables.json")
-    arg_parser.add_argument('--output', type=str, help='output data', default="../data/semQL/train_sem.json")
+    arg_parser.add_argument('--output', type=str, help='output data', default="../data/semQL/dev_sem.json")
     args = arg_parser.parse_args()
 
     parser = Parser()

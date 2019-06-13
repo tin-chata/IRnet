@@ -23,17 +23,18 @@ def train(args):
     :param args:
     :return:
     """
-
     grammar = semQL.Grammar()
     sql_data, table_data, val_sql_data, val_table_data = utils.load_dataset(args.dataset, use_small=args.toy)
 
     model = IRNet(args, grammar)
 
-    if args.cuda: model.cuda()
+    if args.cuda:
+        model.cuda()
 
     # now get the optimizer
     optimizer_cls = eval('torch.optim.%s' % args.optimizer)
     optimizer = optimizer_cls(model.parameters(), lr=args.lr)
+
     print('Enable Learning Rate Scheduler: ', args.lr_scheduler)
     if args.lr_scheduler:
         scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[21, 41], gamma=args.lr_scheduler_gammar)
@@ -44,13 +45,12 @@ def train(args):
     print('Sketch loss coefficient: %f' % args.sketch_loss_coefficient)
 
     if args.load_model:
-        print('load pretrained model from %s'% (args.load_model))
-        pretrained_model = torch.load(args.load_model,map_location=lambda storage, loc: storage)
+        print('load pretrained model from %s' % args.load_model)
+        pretrained_model = torch.load(args.load_model, map_location=lambda storage, loc: storage)
         pretrained_modeled = copy.deepcopy(pretrained_model)
         for k in pretrained_model.keys():
             if k not in model.state_dict().keys():
                 del pretrained_modeled[k]
-
         model.load_state_dict(pretrained_modeled)
 
     model.word_emb = utils.load_word_emb(args.glove_embed_path)
@@ -65,6 +65,7 @@ def train(args):
             for epoch in tqdm.tqdm(range(args.epoch)):
                 if args.lr_scheduler:
                     scheduler.step()
+
                 epoch_begin = time.time()
                 loss = utils.epoch_train(model, optimizer, args.batch_size, sql_data, table_data, args,
                                          loss_epoch_threshold=args.loss_epoch_threshold,
@@ -79,8 +80,8 @@ def train(args):
                     best_dev_acc = acc
                 utils.save_checkpoint(model, os.path.join(model_save_path, '{%s}_{%s}.model') % (epoch, acc))
 
-                log_str = 'Epoch: %d, Loss: %f, Sketch Acc: %f, Acc: %f, time: %f\n' % (
-                    epoch + 1, loss, acc, acc, epoch_end - epoch_begin)
+                log_str = 'Epoch: %d, Loss: %f, Sketch Acc: %f, Acc: %f, time: %f\n' % (epoch + 1, loss, acc, acc,
+                                                                                        epoch_end - epoch_begin)
                 tqdm.tqdm.write(log_str)
                 epoch_fd.write(log_str)
                 epoch_fd.flush()

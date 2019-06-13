@@ -369,7 +369,7 @@ def process_datas(datas, args):
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('--data_path', type=str, help='data', default="../data/nl2sql/train.json")
+    arg_parser.add_argument('--data_path', type=str, help='data', default="../data/nl2sql/dev.json")
     arg_parser.add_argument('--table_path', type=str, help='table data', default="../data/nl2sql/tables.json")
     arg_parser.add_argument('--output', type=str, help='output data', default="../data/processed_data.json")
     arg_parser.add_argument('--conceptNet', type=str, help='conceptNet data', default="../data/conceptNet")
@@ -378,10 +378,10 @@ if __name__ == '__main__':
     # loading dataSets
     data, table = load_dataset(args.data_path, args.table_path)
 
-    # # process datasets
-    # process_result = process_datas(data, args)
-    #
-    # with open(args.output, 'w') as f:
-    #     json.dump(data, f, indent=2)
+    # process datasets
+    process_result = process_datas(data, args)
+
+    with open(args.output, 'w') as f:
+        json.dump(data, f, indent=2)
 
 
