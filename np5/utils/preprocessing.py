@@ -3,12 +3,14 @@
 Created on 2019-05-30
 @author: duytinvo
 """
+import copy
 import json
 import argparse
 import nltk
 import pickle
 from pattern.en import lemma
 from nltk.stem import WordNetLemmatizer
+
 
 VALUE_FILTER = ['what', 'how', 'list', 'give', 'show', 'find', 'id', 'order', 'when']
 AGG = ['average', 'sum', 'max', 'min', 'minimum', 'maximum', 'between']
@@ -46,6 +48,17 @@ class SCHEMA:
 
     def get_tbidcol(self, dbid):
         return self.table_dict[dbid]['col_table']
+
+    def get_tbcoldict(self, dbid):
+        table_names_original = self.table_dict[dbid]['table_names_original']
+        column_names_original = self.table_dict[dbid]['column_names_original']
+        tbcolnames = {'column_names_original': column_names_original, 'table_names_original': table_names_original}
+        tbcoldict = {}
+        for i, tabn in enumerate(table_names_original):
+            table = str(tabn.lower())
+            cols = [str(col[1].lower()) for col in column_names_original if col[0] == i]
+            tbcoldict[table] = cols
+        return tbcoldict, tbcolnames
 
     def get_keys(self, dbid):
         keys = {}
@@ -250,7 +263,9 @@ class PREPROCESS:
 
     def build_one(self, entry):
         """
-        pass
+        entry["db_id"]
+        entry['origin_question_toks']
+        entry['question_toks']
         """
         dbid = entry["db_id"]
         # copy of the origin question_toks
@@ -418,10 +433,24 @@ class PREPROCESS:
         return entry
 
     def build(self, data_path):
+        """
+        entry["db_id"]
+        entry['origin_question_toks']
+        entry['question_toks']
+        """
+        ndata = []
         data = JSON.load(data_path)
         for d in data:
-            self.build_one(d)
-        return data
+            entry = dict()
+            entry["db_id"] = copy.deepcopy(d["db_id"])
+            # entry["query"] = copy.deepcopy(d["query"])
+            # entry["query_toks"] = copy.deepcopy(d["query_toks"])
+            # entry['query_toks_no_value'] = copy.deepcopy(d['query_toks_no_value'])
+            entry["question"] = copy.deepcopy(d["question"])
+            entry['question_toks'] = copy.deepcopy(d['question_toks'])
+            entry = self.build_one(entry)
+            ndata.append(entry)
+        return ndata
 
 
 if __name__ == '__main__':
@@ -435,16 +464,6 @@ if __name__ == '__main__':
                             default="../../data/conceptNet/english_IsA.pkl")
     args = arg_parser.parse_args()
 
-    # # loading dataSets
-    # data, tables = load_dataset(args.data_path, args.table_path)
-    #
-    # # process datasets
-    # process_result = process_data(data, args.kb_relatedto, args.kb_isa)
-    #
-    # with open(args.output, 'w') as f:
-    #     json.dump(data, f, indent=2)
-
-    # schema = SCHEMA(args.table_path)
     preporcess = PREPROCESS(args.table_path, args.kb_relatedto, args.kb_isa)
     data = preporcess.build(args.data_path)
     JSON.dump(data, args.output)
