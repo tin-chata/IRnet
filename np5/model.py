@@ -809,7 +809,7 @@ if __name__ == '__main__':
 
     argparser.add_argument("--wcutoff", type=int, default=1, help="Prune words occurring <= wcutoff")
 
-    argparser.add_argument("--wd_dropout", type=float, default=0.2,
+    argparser.add_argument("--wd_dropout", type=float, default=0.5,
                            help="Dropout rate at word-level embedding")
 
     argparser.add_argument("--wd_padding", action='store_true', default=False,
@@ -820,12 +820,12 @@ if __name__ == '__main__':
 
     argparser.add_argument("--ed_mode", type=str, default="lstm", help="Word-level neural network type")
 
-    argparser.add_argument("--ed_outdim", type=int, default=128,
+    argparser.add_argument("--ed_outdim", type=int, default=600,
                            help="Source Word-level neural network dimension")
 
     argparser.add_argument("--ed_layers", type=int, default=2, help="Source Number of NN layers at word level")
 
-    argparser.add_argument("--ed_dropout", type=float, default=0.2,
+    argparser.add_argument("--ed_dropout", type=float, default=0.5,
                            help="Dropout rate at the encoder-decoder layer")
 
     argparser.add_argument("--enc_att", action='store_false', default=True,
@@ -843,7 +843,7 @@ if __name__ == '__main__':
 
     argparser.add_argument("--swd_embfile", type=str, help="Source Word embedding file", default="")
 
-    argparser.add_argument("--swd_dim", type=int, default=64, help="Source Word embedding size")
+    argparser.add_argument("--swd_dim", type=int, default=300, help="Source Word embedding size")
 
     argparser.add_argument("--swd_reqgrad", action='store_false', default=True,
                            help="Either freezing or unfreezing pretrained embedding")
@@ -860,13 +860,13 @@ if __name__ == '__main__':
 
     argparser.add_argument("--twd_embfile", type=str, help="Target Word embedding file", default="")
 
-    argparser.add_argument("--twd_dim", type=int, default=64, help="Target Word embedding size")
+    argparser.add_argument("--twd_dim", type=int, default=300, help="Target Word embedding size")
 
     argparser.add_argument("--twd_reqgrad", action='store_false', default=True,
                            help="Either freezing or unfreezing pretrained embedding")
 
     # Other parameters
-    argparser.add_argument("--final_dropout", type=float, default=0.2, help="Dropout rate at the last layer")
+    argparser.add_argument("--final_dropout", type=float, default=0.5, help="Dropout rate at the last layer")
 
     argparser.add_argument("--patience", type=int, default=32,
                            help="Early stopping if no improvement after patience epoches")
@@ -879,7 +879,7 @@ if __name__ == '__main__':
 
     argparser.add_argument("--decay_rate", type=float, default=-1.0, help="Decay rate (0.05)")
 
-    argparser.add_argument("--max_epochs", type=int, default=4, help="Maximum trained epochs")
+    argparser.add_argument("--max_epochs", type=int, default=256, help="Maximum trained epochs")
 
     argparser.add_argument("--batch_size", type=int, default=32, help="Mini-batch size")
 
